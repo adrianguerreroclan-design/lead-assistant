@@ -55,7 +55,8 @@ app.get("/api/session/:id", (req, res) => {
 });
 
 export function startServer(): void {
-  app.listen(PORT, () => {
-    console.log(`Lead assistant running at http://localhost:${PORT}`);
+  const port = Number(process.env.PORT) || 3000;
+  app.listen(port, () => {
+    console.log(`Lead assistant running on port ${port}`);
   });
 }
