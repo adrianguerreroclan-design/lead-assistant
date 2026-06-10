@@ -1,0 +1,63 @@
+{
+  "name": "Comfort Pro Heating, Cooling & Plumbing",
+  "phone": "(602) 555-0142",
+  "email": "jobs@comfortpro.example.com",
+  "services": [
+    "AC repair",
+    "AC installation & replacement",
+    "AC tune-up & maintenance",
+    "Heat pump repair & installation",
+    "Furnace repair & installation",
+    "Duct cleaning & sealing",
+    "Indoor air quality (UV lights, air scrubbers)",
+    "Plumbing repair",
+    "Drain cleaning & hydro-jetting",
+    "Water heater repair & replacement",
+    "Tankless water heater installation",
+    "Water softener installation",
+    "Slab leak detection & repair",
+    "Garbage disposal repair & replacement",
+    "Toilet & faucet repair"
+  ],
+  "serviceArea": "Greater Phoenix metro area (within ~30 miles of Phoenix, AZ)",
+  "serviceAreaCities": [
+    "Phoenix", "Scottsdale", "Tempe", "Mesa", "Chandler", "Gilbert",
+    "Glendale", "Peoria", "Surprise", "Goodyear", "Avondale", "Buckeye",
+    "Ahwatukee", "Fountain Hills", "Cave Creek", "Paradise Valley", "Litchfield Park"
+  ],
+  "businessHours": "Mon–Fri 7am–6pm, Sat 8am–3pm (Emergency service available 24/7)",
+  "timezone": "America/Phoenix",
+  "bookingLeadDays": 1,
+  "urgencyKeywords": [
+    "no AC", "no air conditioning", "no cool", "no heat", "no hot water",
+    "flooded", "burst pipe", "slab leak", "gas leak", "sewage backup",
+    "overflowing", "emergency", "urgent", "not working at all"
+  ],
+  "faqs": [
+    {
+      "q": "How quickly can you come out?",
+      "a": "For emergencies we offer same-day response 24/7. Standard appointments are typically available next business day."
+    },
+    {
+      "q": "Do you service my area?",
+      "a": "We serve the Greater Phoenix metro area within about 30 miles of Phoenix, including Scottsdale, Mesa, Chandler, Gilbert, Glendale, Peoria, Surprise, Goodyear, Tempe, and surrounding cities."
+    },
+    {
+      "q": "What brands do you work on?",
+      "a": "We service all major HVAC brands including Trane, Carrier, Lennox, Goodman, Rheem, York, and American Standard, as well as all major plumbing brands."
+    },
+    {
+      "q": "Do you offer maintenance plans?",
+      "a": "Yes! Our annual tune-up plan covers one AC check in spring and one heating check in fall, with priority scheduling and discounted repairs."
+    },
+    {
+      "q": "Is financing available?",
+      "a": "Yes, we offer financing options on new equipment installations. Ask your technician for details."
+    },
+    {
+      "q": "How hot does it get and does that affect my AC?",
+      "a": "Phoenix summers regularly hit 110°F+. We recommend AC tune-ups every spring before the heat arrives, and most systems need refrigerant checks and filter changes more frequently in our climate."
+    }
+  ],
+  "notifyEmail": "dispatch@comfortpro.example.com"
+}

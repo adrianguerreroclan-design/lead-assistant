@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(claude-api)",
+      "Bash(npm install *)",
+      "Read(//usr/local/lib/**)",
+      "Read(//opt/homebrew/lib/**)",
+      "Read(//usr/**)",
+      "Read(//opt/**)",
+      "Read(//Users/adrianguerrero/**)",
+      "Read(//Users/adrianguerrero/.nvm/versions/**)",
+      "Read(//Users/adrianguerrero/.nodenv/**)"
+    ]
+  }
+}
