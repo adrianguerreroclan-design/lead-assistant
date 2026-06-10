@@ -3,7 +3,7 @@ import path from "path";
 import { randomUUID } from "crypto";
 import { runAgent, confirmBooking } from "./agent";
 import { getOrCreateSession, drainPending } from "./session";
-import { getLead, allLeads } from "./leadStore";
+import { getLead } from "./leadStore";
 
 const app = express();
 app.use(express.json());

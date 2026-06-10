@@ -23,6 +23,5 @@ export const FROM_EMAIL = process.env.FROM_EMAIL ?? "noreply@example.com";
 export const PORT = parseInt(process.env.PORT ?? "3000", 10);
 
 if (!ANTHROPIC_API_KEY) {
-  console.error("ERROR: ANTHROPIC_API_KEY is not set in .env");
-  process.exit(1);
+  console.warn("WARNING: ANTHROPIC_API_KEY is not set. Chat endpoints will return errors until it is configured.");
 }
