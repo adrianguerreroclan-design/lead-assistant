@@ -9,7 +9,14 @@
       "Read(//opt/**)",
       "Read(//Users/adrianguerrero/**)",
       "Read(//Users/adrianguerrero/.nvm/versions/**)",
-      "Read(//Users/adrianguerrero/.nodenv/**)"
+      "Read(//Users/adrianguerrero/.nodenv/**)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git -C /Users/adrianguerrero/lead-assistant add Procfile railway.json)",
+      "Bash(git -C /Users/adrianguerrero/lead-assistant commit -m ' *)",
+      "Bash(git -C /Users/adrianguerrero/lead-assistant push origin main)",
+      "Bash(git *)"
     ]
   }
 }

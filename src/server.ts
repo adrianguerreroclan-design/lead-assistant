@@ -60,3 +60,5 @@ export function startServer(): void {
     console.log(`Lead assistant running on port ${port}`);
   });
 }
+
+startServer();
