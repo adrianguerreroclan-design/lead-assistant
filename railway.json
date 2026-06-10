@@ -1,0 +1,1 @@
+{"build":{"builder":"NIXPACKS"},"deploy":{"startCommand":"npx tsx src/server.ts","restartPolicyType":"ON_FAILURE"}}
