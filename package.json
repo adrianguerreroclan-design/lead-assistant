@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev:server": "tsx watch src/index.ts",
-    "start": "npx tsx src/server.ts",
+    "start": "./node_modules/.bin/tsx src/server.ts",
     "start:server": "tsx src/index.ts"
   },
   "dependencies": {
@@ -14,6 +14,9 @@
     "express": "^4.18.2",
     "google-auth-library": "^9.11.0",
     "tsx": "^4.7.1"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
