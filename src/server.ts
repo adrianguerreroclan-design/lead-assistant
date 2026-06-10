@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import { randomUUID } from "crypto";
-import { PORT } from "./config";
 import { runAgent, confirmBooking } from "./agent";
 import { getOrCreateSession, drainPending } from "./session";
 import { getLead, allLeads } from "./leadStore";

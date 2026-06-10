@@ -1,1 +1,1 @@
-{"build":{"builder":"NIXPACKS"},"deploy":{"startCommand":"npm run start:server","restartPolicyType":"ON_FAILURE"}}
+{"build":{"builder":"NIXPACKS"},"deploy":{"startCommand":"npm start","restartPolicyType":"ON_FAILURE"}}
