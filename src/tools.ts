@@ -44,4 +44,23 @@ export const TOOLS: Tool[] = [
       required: ["service", "urgency"],
     },
   },
+  {
+    name: "confirm_booking",
+    description:
+      "Write the appointment to Google Calendar and send confirmation emails. Call this ONLY after the customer has explicitly chosen a specific slot from the list. Returns ok: true on success, ok: false with a reason on failure. Only tell the customer the booking is confirmed if ok is true.",
+    input_schema: {
+      type: "object" as const,
+      properties: {
+        slotIso: {
+          type: "string",
+          description: "ISO datetime string of the chosen slot start time",
+        },
+        slotLabel: {
+          type: "string",
+          description: "Human-readable label for the slot, e.g. 'Fri, Jun 13, 9:00 AM'",
+        },
+      },
+      required: ["slotIso", "slotLabel"],
+    },
+  },
 ];

@@ -42,9 +42,25 @@ async function handleToolCall(
     if (slots.length === 0) {
       return JSON.stringify({ ok: false, message: "No available slots found. Ask customer to call directly." });
     }
-    const lead = getOrCreateLead(sessionId);
     updateLead(sessionId, { bookingProposed: true });
     return JSON.stringify({ ok: true, slots: slots.map((s) => ({ label: s.label, iso: s.start })) });
+  }
+
+  if (toolName === "confirm_booking") {
+    const lead = getOrCreateLead(sessionId);
+    if (lead.calendarEventId) {
+      return JSON.stringify({ ok: false, reason: "A booking already exists for this session." });
+    }
+    const { message, calendarDebug } = await confirmBooking(
+      sessionId,
+      toolInput.slotIso as string,
+      toolInput.slotLabel as string
+    );
+    if (calendarDebug) {
+      console.log("[confirm_booking] calendar error:", calendarDebug);
+      return JSON.stringify({ ok: false, reason: calendarDebug });
+    }
+    return JSON.stringify({ ok: true, message });
   }
 
   return JSON.stringify({ error: "Unknown tool" });
