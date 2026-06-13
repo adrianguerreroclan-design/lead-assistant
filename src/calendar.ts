@@ -1,6 +1,10 @@
 import { GOOGLE_SERVICE_ACCOUNT_JSON, GOOGLE_CALENDAR_ID } from "./config";
 import business from "./business.json";
 
+// Startup diagnostic — presence only, never values
+console.log("[calendar] GOOGLE_SERVICE_ACCOUNT_JSON present:", !!GOOGLE_SERVICE_ACCOUNT_JSON);
+console.log("[calendar] GOOGLE_CALENDAR_ID:", GOOGLE_CALENDAR_ID || "(not set)");
+
 interface Slot {
   start: string;
   end: string;
@@ -105,9 +109,14 @@ export async function createCalendarEvent(
   sessionId: string,
   lead: LeadFields,
   slot: Slot
-): Promise<string | null> {
+): Promise<{ eventId: string | null; debugError?: string }> {
   const ctx = await getAuth();
-  if (!ctx) return null;
+  if (!ctx) {
+    return {
+      eventId: null,
+      debugError: "getAuth() returned null — GOOGLE_SERVICE_ACCOUNT_JSON is missing or could not be parsed",
+    };
+  }
 
   const description = [
     `Service: ${lead.service}`,
@@ -130,8 +139,9 @@ export async function createCalendarEvent(
         end: { dateTime: slot.end, timeZone: business.timezone },
       },
     });
-    return event.data.id ?? null;
-  } catch {
-    return null;
+    return { eventId: event.data.id ?? null };
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return { eventId: null, debugError: `events.insert threw: ${msg}` };
   }
 }

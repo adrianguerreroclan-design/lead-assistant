@@ -99,13 +99,13 @@ export async function confirmBooking(
   sessionId: string,
   slotIso: string,
   slotLabel: string
-): Promise<string> {
+): Promise<{ message: string; calendarDebug?: string }> {
   const lead = getOrCreateLead(sessionId);
   if (!lead.name || !lead.service || !lead.address) {
-    return "Missing lead information. Cannot confirm booking.";
+    return { message: "Missing lead information. Cannot confirm booking." };
   }
 
-  const eventId = await createCalendarEvent(
+  const { eventId, debugError } = await createCalendarEvent(
     sessionId,
     {
       name:    lead.name,
@@ -143,5 +143,8 @@ export async function confirmBooking(
     sessionId,
   }).catch(() => {});
 
-  return `Booked! Your ${lead.service} appointment is confirmed for ${slotLabel}. ${lead.email ? "A confirmation email is on its way." : ""}`;
+  return {
+    message: `Booked! Your ${lead.service} appointment is confirmed for ${slotLabel}. ${lead.email ? "A confirmation email is on its way." : ""}`,
+    calendarDebug: debugError,
+  };
 }

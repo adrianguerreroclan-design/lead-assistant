@@ -36,9 +36,9 @@ app.post("/api/book", async (req, res) => {
     return res.status(400).json({ error: "sessionId, slotIso, and slotLabel are required" });
   }
   try {
-    const message = await confirmBooking(sessionId, slotIso, slotLabel);
+    const { message, calendarDebug } = await confirmBooking(sessionId, slotIso, slotLabel);
     const lead = getLead(sessionId);
-    res.json({ message, lead });
+    res.json({ message, lead, ...(calendarDebug ? { calendarDebug } : {}) });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
