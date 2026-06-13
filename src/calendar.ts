@@ -14,14 +14,14 @@ interface Slot {
 async function getAuth() {
   if (!GOOGLE_SERVICE_ACCOUNT_JSON) return null;
   try {
-    const { google } = await import("@googleapis/calendar");
+    const { calendar: calendarFn } = await import("@googleapis/calendar");
     const { GoogleAuth } = await import("google-auth-library");
     const credentials = JSON.parse(GOOGLE_SERVICE_ACCOUNT_JSON);
     const auth = new GoogleAuth({
       credentials,
       scopes: ["https://www.googleapis.com/auth/calendar"],
     });
-    return { google, auth };
+    return { calendarFn, auth };
   } catch {
     return null;
   }
@@ -66,8 +66,8 @@ export async function getAvailableSlots(urgency: string): Promise<Slot[]> {
   if (!ctx) return mockSlots(urgency);
 
   try {
-    const { google, auth } = ctx;
-    const calendar = google.calendar({ version: "v3", auth: auth as any });
+    const { calendarFn, auth } = ctx;
+    const calendar = calendarFn({ version: "v3", auth: auth as any });
     const now = new Date();
     const future = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
@@ -128,8 +128,8 @@ export async function createCalendarEvent(
   ].filter(Boolean).join("\n");
 
   try {
-    const { google, auth } = ctx;
-    const calendar = google.calendar({ version: "v3", auth: auth as any });
+    const { calendarFn, auth } = ctx;
+    const calendar = calendarFn({ version: "v3", auth: auth as any });
     const event = await calendar.events.insert({
       calendarId: GOOGLE_CALENDAR_ID,
       requestBody: {
