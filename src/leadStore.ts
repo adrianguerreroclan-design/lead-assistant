@@ -26,7 +26,10 @@ export function getOrCreateLead(sessionId: string): Lead {
 
 export function updateLead(sessionId: string, patch: Partial<Lead>): Lead {
   const lead = getOrCreateLead(sessionId);
-  Object.assign(lead, patch, { updatedAt: Date.now() });
+  const clean = Object.fromEntries(
+    Object.entries(patch).filter(([, v]) => v !== undefined)
+  ) as Partial<Lead>;
+  Object.assign(lead, clean, { updatedAt: Date.now() });
   return lead;
 }
 
