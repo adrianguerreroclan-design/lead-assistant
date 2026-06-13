@@ -105,11 +105,22 @@ export async function confirmBooking(
     return "Missing lead information. Cannot confirm booking.";
   }
 
-  const eventId = await createCalendarEvent(sessionId, lead.name, lead.service, lead.address, {
-    start: slotIso,
-    end: new Date(new Date(slotIso).getTime() + 2 * 60 * 60 * 1000).toISOString(),
-    label: slotLabel,
-  });
+  const eventId = await createCalendarEvent(
+    sessionId,
+    {
+      name:    lead.name,
+      service: lead.service,
+      address: lead.address,
+      urgency: lead.urgency,
+      phone:   lead.phone,
+      email:   lead.email,
+    },
+    {
+      start: slotIso,
+      end:   new Date(new Date(slotIso).getTime() + 2 * 60 * 60 * 1000).toISOString(),
+      label: slotLabel,
+    }
+  );
 
   updateLead(sessionId, { bookedSlot: slotLabel, calendarEventId: eventId ?? undefined });
 

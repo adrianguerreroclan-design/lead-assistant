@@ -92,15 +92,31 @@ export async function getAvailableSlots(urgency: string): Promise<Slot[]> {
   }
 }
 
+interface LeadFields {
+  name: string;
+  service: string;
+  address: string;
+  urgency?: string;
+  phone?: string;
+  email?: string;
+}
+
 export async function createCalendarEvent(
   sessionId: string,
-  name: string,
-  service: string,
-  address: string,
+  lead: LeadFields,
   slot: Slot
 ): Promise<string | null> {
   const ctx = await getAuth();
   if (!ctx) return null;
+
+  const description = [
+    `Service: ${lead.service}`,
+    `Address: ${lead.address}`,
+    lead.urgency ? `Urgency: ${lead.urgency}` : null,
+    lead.phone   ? `Phone: ${lead.phone}`     : null,
+    lead.email   ? `Email: ${lead.email}`     : null,
+    `Session: ${sessionId}`,
+  ].filter(Boolean).join("\n");
 
   try {
     const { google, auth } = ctx;
@@ -108,8 +124,8 @@ export async function createCalendarEvent(
     const event = await calendar.events.insert({
       calendarId: GOOGLE_CALENDAR_ID,
       requestBody: {
-        summary: `${service} — ${name}`,
-        description: `Address: ${address}\nSession: ${sessionId}`,
+        summary: `${lead.service} — ${lead.name}`,
+        description,
         start: { dateTime: slot.start, timeZone: business.timezone },
         end: { dateTime: slot.end, timeZone: business.timezone },
       },
