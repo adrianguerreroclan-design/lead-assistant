@@ -4,7 +4,7 @@ export const TOOLS: Tool[] = [
   {
     name: "save_lead_info",
     description:
-      "Save or update the customer's lead information once you have collected it. Call this as soon as you have all four required fields.",
+      "Save or update the customer's lead information. Call it as soon as you have the four required fields (name, service, address, urgency). Can be called a second time with just the email field once the customer provides it — existing fields are preserved.",
     input_schema: {
       type: "object" as const,
       properties: {
