@@ -36,7 +36,7 @@ const bookLimiter = rateLimit({
 // POST /api/chat — send a user message, get assistant reply
 app.post("/api/chat", chatLimiter, async (req, res) => {
   const { sessionId, message } = req.body as { sessionId?: unknown; message?: unknown };
-  if (sessionId !== undefined && !UUID_RE.test(String(sessionId))) {
+  if (sessionId != null && sessionId !== "" && !UUID_RE.test(String(sessionId))) {
     return res.status(400).json({ error: "Invalid request." });
   }
   if (!validStr(message, 2000)) {
