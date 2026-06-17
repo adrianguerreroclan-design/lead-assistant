@@ -1,3 +1,4 @@
+import rateLimit from "express-rate-limit";
 import express from "express";
 import path from "path";
 import { randomUUID } from "crypto";
@@ -6,11 +7,28 @@ import { getOrCreateSession, drainPending } from "./session";
 import { getLead } from "./leadStore";
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(express.json());
 app.use(express.static(path.join(process.cwd(), "public")));
 
+const chatLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests. Please wait a few minutes and try again." },
+});
+
+const bookLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  limit: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Booking limit reached. Please try again later or call us directly." },
+});
+
 // POST /api/chat — send a user message, get assistant reply
-app.post("/api/chat", async (req, res) => {
+app.post("/api/chat", chatLimiter, async (req, res) => {
   const { sessionId, message } = req.body as { sessionId?: string; message?: string };
   if (!message || typeof message !== "string") {
     return res.status(400).json({ error: "message is required" });
@@ -26,7 +44,7 @@ app.post("/api/chat", async (req, res) => {
 });
 
 // POST /api/book — confirm a booking slot
-app.post("/api/book", async (req, res) => {
+app.post("/api/book", bookLimiter, async (req, res) => {
   const { sessionId, slotIso, slotLabel } = req.body as {
     sessionId?: string;
     slotIso?: string;
