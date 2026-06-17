@@ -1,6 +1,15 @@
 import { RESEND_API_KEY, FROM_EMAIL } from "./config";
 import business from "./business.json";
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+}
+
 export async function sendConfirmationEmail(params: {
   to: string;
   customerName: string;
@@ -16,8 +25,8 @@ export async function sendConfirmationEmail(params: {
     subject: `Appointment Confirmed — ${params.service}`,
     html: `
       <h2>Your appointment is confirmed!</h2>
-      <p>Hi ${params.customerName},</p>
-      <p>We've scheduled your <strong>${params.service}</strong> appointment for <strong>${params.slot}</strong> at ${params.address}.</p>
+      <p>Hi ${escapeHtml(params.customerName)},</p>
+      <p>We've scheduled your <strong>${escapeHtml(params.service)}</strong> appointment for <strong>${escapeHtml(params.slot)}</strong> at ${escapeHtml(params.address)}.</p>
       <p>Our technician will arrive during the scheduled window. If you need to reschedule, call us at <strong>${business.phone}</strong>.</p>
       <p>— ${business.name}</p>
     `,
@@ -50,12 +59,12 @@ export async function sendInternalNotification(params: {
     html: `
       <h3>New qualified lead</h3>
       <ul>
-        <li><strong>Name:</strong> ${params.customerName}</li>
-        <li><strong>Service:</strong> ${params.service}</li>
-        <li><strong>Address:</strong> ${params.address}</li>
-        <li><strong>Urgency:</strong> ${params.urgency}</li>
-        ${params.slot ? `<li><strong>Booked slot:</strong> ${params.slot}</li>` : ""}
-        <li><strong>Session:</strong> ${params.sessionId}</li>
+        <li><strong>Name:</strong> ${escapeHtml(params.customerName)}</li>
+        <li><strong>Service:</strong> ${escapeHtml(params.service)}</li>
+        <li><strong>Address:</strong> ${escapeHtml(params.address)}</li>
+        <li><strong>Urgency:</strong> ${escapeHtml(params.urgency)}</li>
+        ${params.slot ? `<li><strong>Booked slot:</strong> ${escapeHtml(params.slot)}</li>` : ""}
+        <li><strong>Session:</strong> ${escapeHtml(params.sessionId)}</li>
       </ul>
     `,
   };

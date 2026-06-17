@@ -73,8 +73,13 @@ export async function runAgent(sessionId: string, userMessage: string): Promise<
   session.messages.push({ role: "user", content: userMessage });
 
   let finalText = "";
+  let iterations = 0;
 
   while (true) {
+    if (++iterations > 10) {
+      console.warn("[runAgent] iteration cap reached for session", sessionId);
+      break;
+    }
     const response = await client.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 1024,
